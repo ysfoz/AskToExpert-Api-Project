@@ -7,10 +7,17 @@ const customErrorHandler = require('./middleware/errors/customErrorHandler')
 const app = express();
 const PORT = process.env.PORT || 5005
 
+// Express-Body middleware read to json obj
+
+app.use(express.json())
+
 // Database Connection
 connectDatabase()
 
+// Router
 app.use('/api', router);
+
+// Error Hnadler
 app.use(customErrorHandler);
 
 

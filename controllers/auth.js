@@ -10,15 +10,14 @@ const register = asyncErrorWrapper(async (req, res, next) => {
    *  method post
    *
    * */
-  const name = "ysf";
-  const email = "y@ye.com";
-  const password = "12345";
+
 
   // Sending users to db
+  const { name, email, password} =req.body
   const user = await User.create({
     name,
     email,
-    password,
+    password
   });
 
   res.status(200).json({
