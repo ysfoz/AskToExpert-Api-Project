@@ -1,0 +1,27 @@
+{
+  "name": "ask_to_expert",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysfoz/AskToExpert-Api-Project.git"
+  },
+  "author": "ysf ozturk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ysfoz/AskToExpert-Api-Project/issues"
+  },
+  "homepage": "https://github.com/ysfoz/AskToExpert-Api-Project#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
