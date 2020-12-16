@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const {getAllQuestions} = require('../controllers/questions')
 
-router.get('/',(req,res) => {
-    res.send('question page')
-} )
+router.get('/', getAllQuestions)
 
 
 module.exports = router;
