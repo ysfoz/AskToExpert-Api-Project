@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 const Schema = mongoose.Schema;
+
+
 
 const UserSchema = new Schema({
   name: {
@@ -11,7 +14,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: [true, "Please try another Email"],
+    unique: true,
     match: [
       /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
       "Please provide a valid Email",
@@ -53,6 +56,24 @@ const UserSchema = new Schema({
     default: false,
   },
 });
+
+// CREATE Token
+
+UserSchema.methods.generateJwtFromUser = function(){
+  const { JWT_SECRET_KEY,JWT_EXPIRE } = process.env;
+ const payload = {
+   id:this._id,
+   name:this.name
+ }
+const token = jwt.sign(payload,JWT_SECRET_KEY,{
+  expiresIn: JWT_EXPIRE
+});
+return token;
+};
+
+
+
+
 // mongoose un pre ve post hooks , database e veri gondermeden once ve gonderdikten 
 //sonra yapilmasi istenilen islemeler icin kullanilir. biz burada  passwordu sifrelemek icin kullandik.
 // bus islemi authcontroller icerisinde de yapabilirdik.

@@ -20,6 +20,9 @@ const register = asyncErrorWrapper(async (req, res, next) => {
     password
   });
 
+  const token = user.generateJwtFromUser();
+  console.log(token)
+
   res.status(200).json({
     register: true,
     data: user,
@@ -27,7 +30,7 @@ const register = asyncErrorWrapper(async (req, res, next) => {
 });
 
 const errorTest = (req, res, next) => {
-  return next(new CustomError("bir hata var costum errror"));
+  return next(new CustomError("There is something wrong"));
 };
 
 module.exports = { register, errorTest };

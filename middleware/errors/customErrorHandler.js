@@ -10,6 +10,10 @@ const customErrorHandler = (err,eq,res,next) =>{
    if(err.name === 'ValidationError'){
     customError = new CustomError(err.message, 400)
   }
+  // Duplicate email error
+  if(err.code === 11000){
+    customError = new CustomError('Duplicate Key Found : Check your input',400)
+  }
 
     res.status(customError.status || 500)
     .json({
