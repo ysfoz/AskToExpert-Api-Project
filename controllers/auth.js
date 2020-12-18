@@ -1,6 +1,9 @@
 const User = require("../models/User");
-const CustomError = require("../helpers/error/CustomError");
 const asyncErrorWrapper = require("express-async-handler");
+const { sendJwtToClient} = require('../helpers/authorization/tokenHelpers')
+const { validateUserInput, comparePassword } = require('../helpers/input/inputHelpers');
+const CustomError = require("../helpers/error/CustomError");
+
 
 const register = asyncErrorWrapper(async (req, res, next) => {
   //todo: bu ksim kullanicidan alincak, suan deneme mamcli yapildi, view asamasinda kaldirilcak
@@ -19,18 +22,36 @@ const register = asyncErrorWrapper(async (req, res, next) => {
     email,
     password
   });
-
-  const token = user.generateJwtFromUser();
-  console.log(token)
-
-  res.status(200).json({
-    register: true,
-    data: user,
-  });
+sendJwtToClient(user,res)
+ 
 });
 
-const errorTest = (req, res, next) => {
-  return next(new CustomError("There is something wrong"));
-};
+const getUser = (req,res,next)=>{
+  res.json({
+    success:true,
+    data:{
+      id:req.user.id,
+      name:req.user.name
 
-module.exports = { register, errorTest };
+    }
+
+  })
+}
+
+const login = asyncErrorWrapper(async(req, res, next) => {
+  const { email, password } = req.body;
+  if(!validateUserInput(email,password)){
+    return next(new CustomError('Please check your inputs',400))
+  }
+  const user = await User.findOne({ email }).select('+password');
+  console.log(user)
+
+  res
+  .status(200)
+  .json({
+    success:true
+  })
+})
+
+
+module.exports = { register, getUser,login };
