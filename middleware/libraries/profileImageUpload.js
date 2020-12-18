@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
     filename: function(req,file,callback) {
         
         const extension = file.mimetype.split('/')[1]
-        console.log("🚀 ~ file: profileImageUpload.js ~ line 1 ~ file.mimetype", file.mimetype)
         req.savedProfileImage = 'image_' + req.user.id + '.' + extension
         callback(null,req.savedProfileImage)
     }

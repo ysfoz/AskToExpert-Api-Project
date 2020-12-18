@@ -47,7 +47,7 @@ const UserSchema = new Schema({
   website: {
     type: String,
   },
-  prfile_img: {
+  profile_image: {
     type: String,
     default: "default.jpg",
   },
