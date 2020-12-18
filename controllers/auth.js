@@ -44,7 +44,11 @@ const login = asyncErrorWrapper(async(req, res, next) => {
     return next(new CustomError('Please check your inputs',400))
   }
   const user = await User.findOne({ email }).select('+password');
-  console.log(user)
+  if(!comparePassword(password,user.password)){
+    return next(new CustomError('Please check your credentials',400))
+  }
+  sendJwtToClient(user,res)
+
 
   res
   .status(200)
