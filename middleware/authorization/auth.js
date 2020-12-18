@@ -23,7 +23,7 @@ const getAccessToRoute = (req, res, next) => {
         new CostumError("You are not authorized to access this route")
       );
     }
-    console.log(decoded)
+    
     req.user = {
       id:decoded.id,
       name:decoded.name,

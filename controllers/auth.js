@@ -57,5 +57,29 @@ const login = asyncErrorWrapper(async(req, res, next) => {
   })
 })
 
+const logout = asyncErrorWrapper(async(req, res, next) => {
 
-module.exports = { register, getUser,login };
+  const { NODE_ENV } = process.env;
+  return res
+  .status(200)
+  .cookie({
+   httpOnly:true,
+   expires:new Date(Date.now()),
+   secure:NODE_ENV === 'development' ? false : true
+  }).json({
+    success:true,
+    message: 'Logout successfull'
+  })
+
+});
+
+const imageUpload = asyncErrorWrapper(async(req, res, next) => {
+  res
+  .status(200)
+  .json({
+    success:true,
+    message:'you uploaded image successfully'
+  })
+})
+
+module.exports = { register, getUser,login, logout, imageUpload };
